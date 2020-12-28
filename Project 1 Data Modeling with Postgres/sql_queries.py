@@ -7,6 +7,12 @@ artist_table_drop   = "DROP table if exists artists"
 time_table_drop     = "DROP table if exists time"
 
 # CREATE TABLES
+create_table_test = ("""
+create table test(
+    test_id  int,
+    test_name varchar
+    );
+""")
 
 songplay_table_create = ("""
 create table songplays(
@@ -20,7 +26,6 @@ create table songplays(
     location VARCHAR,
     user_agent VARCHAR
 );
-
 """)
 
 user_table_create = ("""
@@ -53,7 +58,6 @@ location varchar,
 latitude decimal, 
 longitude decimal
 );
-
 """)
 
 time_table_create = ("""create table time (
@@ -64,7 +68,6 @@ week int,
 month int , 
 year int , 
 weekday boolean)
-
 """)
 
 # INSERT RECORDS
@@ -86,7 +89,6 @@ song_table_insert = ("""
     insert into songs (song_id, title, artist_id, year ,duration time)
     values (%s,%s,%s,%s,%s)
     on conflict (songs) DO NOTHING;
-
 """)
 
 artist_table_insert = ("""
@@ -100,15 +102,19 @@ time_table_insert = ("""
     insert into time(start_time ,hour ,day ,week ,month ,year ,weekday )
     values(%s, %s, %s, %s, %s, %s, %s)
     on conflict (time) DO NOTHING;
-
 """)
 
 # FIND SONGS
 
 song_select = ("""
+SELECT song_id, artists.artist_id
+    FROM songs INNER JOIN artists ON songs.artist_id = artists.artist_id
+    WHERE songs.title = %s
+    AND artists.name = %s
+    AND songs.duration = %s   
 """)
 
 # QUERY LISTS
 
-create_table_queries = [songplay_table_create, user_table_create, song_table_create, artist_table_create, time_table_create]
+create_table_queries = [create_table_test,songplay_table_create, user_table_create, song_table_create, artist_table_create, time_table_create]
 drop_table_queries = [songplay_table_drop, user_table_drop, song_table_drop, artist_table_drop, time_table_drop]
