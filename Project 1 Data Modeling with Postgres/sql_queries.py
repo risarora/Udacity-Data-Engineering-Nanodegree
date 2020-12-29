@@ -16,7 +16,7 @@ create table test(
 
 songplay_table_create = ("""
 create table songplays(
-    songplay_id  serial PRIMARY KEY,
+    songplay_id  varchar PRIMARY KEY,
     start_time timestamp,
     user_id VARCHAR,
     level VARCHAR,
@@ -30,9 +30,9 @@ create table songplays(
 
 user_table_create = ("""
 create table users (
-    user_id  serial PRIMARY KEY,
-    first_name VARCHAR ( 30 ) NOT NULL, 
-    last_name VARCHAR ( 30 ) NOT NULL, 
+    user_id  varchar PRIMARY KEY,
+    first_name VARCHAR NOT NULL, 
+    last_name VARCHAR NOT NULL, 
     gender VARCHAR(2), 
     level int
 );
@@ -41,22 +41,22 @@ create table users (
 
 song_table_create = ("""
 create table songs (
-song_id  serial PRIMARY KEY,
+song_id  varchar PRIMARY KEY,
 title varchar, 
 artist_id varchar,
 year varchar,
-duration time
+duration decimal
 );
 
 """)
 
 artist_table_create = ("""
 create table artists (
-artist_id  serial PRIMARY KEY,
-name VARCHAR ( 30 ) NOT NULL, 
-location varchar, 
-latitude decimal, 
-longitude decimal
+artist_id  varchar PRIMARY KEY,
+artist_name VARCHAR NOT NULL, 
+artist_location varchar, 
+artist_latitude decimal, 
+artist_longitude decimal
 );
 """)
 
@@ -86,15 +86,15 @@ user_table_insert = ("""
 """)
 
 song_table_insert = ("""
-    insert into songs (song_id, title, artist_id, year ,duration time)
+    insert into songs (song_id, title, artist_id, year ,duration )
     values (%s,%s,%s,%s,%s)
-    on conflict (songs) DO NOTHING;
+    on conflict DO NOTHING;
 """)
 
 artist_table_insert = ("""
-    insert into artists (artist_id, name, location, latitude, longitude)
+    insert into artists (artist_id, artist_name, artist_location, artist_latitude, artist_longitude)
     values(%s,%s,%s,%s,%s)
-    on conflict (artists) DO NOTHING;
+    on conflict DO NOTHING;
 """)
 
 
