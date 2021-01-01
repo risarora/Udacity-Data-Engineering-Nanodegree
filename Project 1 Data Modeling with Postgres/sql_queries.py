@@ -31,43 +31,42 @@ create table songplays(
 user_table_create = ("""
 create table users (
     user_id  varchar PRIMARY KEY,
-    first_name VARCHAR NOT NULL, 
-    last_name VARCHAR NOT NULL, 
+    first_name VARCHAR, 
+    last_name VARCHAR , 
     gender VARCHAR(2), 
-    level int
+    level varchar(10)
 );
 
 """)
 
 song_table_create = ("""
-create table songs (
-song_id  varchar PRIMARY KEY,
-title varchar, 
-artist_id varchar,
-year varchar,
-duration decimal
+    create table songs (
+    song_id  varchar PRIMARY KEY,
+    title varchar, 
+    artist_id varchar,
+    year varchar,
+    duration decimal
 );
-
 """)
 
 artist_table_create = ("""
-create table artists (
-artist_id  varchar PRIMARY KEY,
-artist_name VARCHAR NOT NULL, 
-artist_location varchar, 
-artist_latitude decimal, 
-artist_longitude decimal
+    create table artists (
+    artist_id  varchar PRIMARY KEY,
+    artist_name VARCHAR NOT NULL, 
+    artist_location varchar, 
+    artist_latitude decimal, 
+    artist_longitude decimal
 );
 """)
 
 time_table_create = ("""create table time (
-start_time timestamp, 
-hour int, 
-day int, 
-week int, 
-month int , 
-year int , 
-weekday boolean)
+    start_time timestamp, 
+    hour int, 
+    day int, 
+    week int, 
+    month int , 
+    year int , 
+    weekday int)
 """)
 
 # INSERT RECORDS
@@ -75,13 +74,13 @@ weekday boolean)
 songplay_table_insert = ("""
     insert into songplays(songplay_id ,start_time ,user_id ,level ,song_id ,artist_id ,session_id ,location ,user_agent ) 
     values(%s,%s,%s,%s,%s,%s,%s,%s,%s)
-    on conflict (songplays) DO NOTHING;
+    on conflict DO NOTHING;
 """)
 
 user_table_insert = ("""
-    insert into users (user_i, first_name, last_name, gender, level ) 
+    insert into users (user_id, first_name, last_name, gender, level ) 
     values(%s,%s,%s,%s,%s)
-    on conflict (users) DO NOTHING;
+    on conflict DO NOTHING;
 
 """)
 
@@ -101,7 +100,7 @@ artist_table_insert = ("""
 time_table_insert = ("""
     insert into time(start_time ,hour ,day ,week ,month ,year ,weekday )
     values(%s, %s, %s, %s, %s, %s, %s)
-    on conflict (time) DO NOTHING;
+    on conflict DO NOTHING;
 """)
 
 # FIND SONGS
@@ -110,7 +109,7 @@ song_select = ("""
 SELECT song_id, artists.artist_id
     FROM songs INNER JOIN artists ON songs.artist_id = artists.artist_id
     WHERE songs.title = %s
-    AND artists.name = %s
+    AND artists.artist_name = %s
     AND songs.duration = %s   
 """)
 
