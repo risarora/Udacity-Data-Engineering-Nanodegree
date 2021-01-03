@@ -13,7 +13,7 @@ def process_song_file(cur, filepath):
     df = pd.read_json(filepath, lines=True)
     
     # insert song record
-    song_cols=['song_id', 'title', 'artist_id', 'year', 'duration']
+    song_cols=['title', 'artist_id', 'year', 'duration']
     song_data = df[song_cols].values[0].tolist()    
     cur.execute(song_table_insert, song_data)
     
@@ -63,7 +63,7 @@ def process_log_file(cur, filepath):
             songid, artistid = None, None
 
         # insert songplay record
-        songplay_data = (index, row.tsinmilli, row.userId, row.level, songid, artistid, row.sessionId,row.location, row.userAgent)
+        songplay_data = (row.tsinmilli, row.userId, row.level, songid, artistid, row.sessionId,row.location, row.userAgent)
  
         cur.execute(songplay_table_insert, songplay_data)
 
